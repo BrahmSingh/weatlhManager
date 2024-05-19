@@ -1,1 +1,1 @@
-# weatlhManager
+# Weatlh Manager AI Assistant
