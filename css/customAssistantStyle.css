@@ -1,0 +1,15 @@
+.WACHeader {
+    background: #0e62fe !important;
+}
+
+.WACHeader__Buttons,
+.WACHeader__RightButtons
+{
+   color: #fff !important;
+}
+
+.cds--slug__button
+{
+    color: #fff !important;
+    border: 1px solid #fff !important;
+}
