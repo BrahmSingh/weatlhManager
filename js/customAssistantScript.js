@@ -21,32 +21,37 @@ function preReceiveHandler(event) {
   }
   
 
+var g_wa_instance;
 window.watsonAssistantChatOptions = {
     integrationID: "7f393ba4-5df4-4027-aac3-26e58be558f9", // The ID of this integration.
     region: "aws-us-east-1", // The region your integration is hosted in.
     serviceInstanceID: "20240313-1416-3826-1055-26022b1c41ef", // The ID of your service instance.
+    showRestartButton: true,
+    
     onLoad: async (instance) => {
         // The instance returned here has many methods on it that are documented on this page. You can assign it to any
         // global window variable you like if you need to access it in other functions in your application. This instance
         // is also passed as an argument to all event handlers when web chat fires an event.
         
         window.webChatInstance = instance;
-        instance.updateCSSVariables({
-            'LAUNCHER-color-background': '#525252',
-            'LAUNCHER-color-background-hover': '#3d3d3d',
-            'LAUNCHER-color-background-active': '#1f1f1f',
-            'LAUNCHER-color-focus-border': '#ffffff',
-            'LAUNCHER-color-avatar': '#ffffff',
-            'LAUNCHER-EXPANDED-MESSAGE-color-background': '#ffffff',
-            'LAUNCHER-EXPANDED-MESSAGE-color-background-hover': '#ebebeb',
-            'LAUNCHER-EXPANDED-MESSAGE-color-background-active': '#cccccc',
-            'LAUNCHER-EXPANDED-MESSAGE-color-focus-border': '#000000',
-            'LAUNCHER-EXPANDED-MESSAGE-color-text': '#000000',
-            'LAUNCHER-MOBILE-color-text': '#000000',
-          });
+        
+        instance.on({
+         type: "customResponse",
+         handler: (event, instance) => {
+           if (
+             event.data.message.user_defined &&
+             event.data.message.user_defined.user_defined_type === "embed-multimedia"
+           ) {
+             embedChartOrTableHandler(event);
+           }
+           
+         },
+       });
         await instance.render();
      }
   };
+
+
   setTimeout(function(){
     const t=document.createElement('script');
     t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
