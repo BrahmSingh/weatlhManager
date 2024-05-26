@@ -18,3 +18,30 @@
 {
     width: 35em !important;
 }
+
+#WACContainer.WACContainer .HSArticles {
+    margin: 12px 16px 16px 16px;
+    padding: 8px 16px;
+    background-color: #ffffff;
+  }
+
+  #WACContainer.WACContainer .HSTitle {
+    font-weight: 600;
+    padding-left: 16px;
+  }
+
+  #WACContainer.WACContainer .HSContainer__Link {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  #WACContainer.WACContainer a.HSContainer__Link,
+  #WACContainer.WACContainer a.HSContainer__Link:visited {
+    color: #004144;
+  }
+
+  #WACContainer.WACContainer .HSContainer__LinkIcon {
+    display: inline-block;
+    width: 30px;
+  }
+

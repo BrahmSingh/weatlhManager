@@ -20,6 +20,44 @@ function preReceiveHandler(event) {
     });
   }
   
+ /**
+     * This function will set up the custom element that will be displayed on the home screen.
+     */
+ function createHomeScreenElement(instance) {
+  const title = document.createElement('div');
+  title.classList.add('HSTitle');
+  title.innerHTML = 'Top articles';
+
+  const articles = document.createElement('div');
+  articles.classList.add('HSArticles');
+  articles.appendChild(createLink('&#x1F6D2;', 'Interactive IBM watsonx Assistant demo', 'https://www.ibm.com/products/watson-assistant/demos/lendyr/demo.html'));
+  articles.appendChild(createLink('&#x1F9FE;', 'IBM watsonx Assistant product page', 'https://www.ibm.com/products/watson-assistant'));
+  articles.appendChild(createLink('&#x2754;', 'Documentation', 'https://cloud.ibm.com/docs/watson-assistant'));
+
+  const container = document.createElement('div');
+  container.classList.add('HSContainer');
+  container.appendChild(title);
+  container.appendChild(articles);
+
+  // This is what adds this custom content to web chat. The "homeScreenAfterStartersElement" element is a writeable
+  // area that appears at the bottom of the home screen below the starters.
+  instance.writeableElements.homeScreenAfterStartersElement.appendChild(container);
+}
+
+/**
+ * This creates a button that can be displayed in the custom element on the home screen.
+ */
+function createLink(icon, label, href) {
+  const link = document.createElement('a');
+  link.href = href;
+  link.target = '_blank'
+  link.classList.add('HSContainer__Link');
+  // All IBM Carbon class names (https://carbondesignsystem.com/) are automatically available for use inside of
+  // web chat and will inherit theming values you have set on web chat.
+  link.classList.add('cds--link');
+  link.innerHTML = `<span class="HSContainer__LinkIcon">${icon}</span>${label}`;
+  return link;
+}
 
 var g_wa_instance;
 window.watsonAssistantChatOptions = {
@@ -32,21 +70,23 @@ window.watsonAssistantChatOptions = {
         // The instance returned here has many methods on it that are documented on this page. You can assign it to any
         // global window variable you like if you need to access it in other functions in your application. This instance
         // is also passed as an argument to all event handlers when web chat fires an event.
-        
-        window.webChatInstance = instance;
-        
-        instance.on({
-         type: "customResponse",
-         handler: (event, instance) => {
-           if (
-             event.data.message.user_defined &&
-             event.data.message.user_defined.user_defined_type === "embed-multimedia"
-           ) {
-             embedChartOrTableHandler(event);
-           }
-           
-         },
-       });
+        createHomeScreenElement(instance);
+        function receive(event) {
+          var contactNumber =
+            event.data.context.skills["main skill"].user_defined.contactNumber;
+
+
+          if (contactNumber != "") {
+           // document.getElementById("background").style.display = "none";
+           // document.getElementById("wa-output-summ-title").innerHTML =
+           //   "<b>Summary</b>";
+            document.getElementById("about-section").click();
+          }
+    
+
+        }
+    
+        instance.on({ type: "receive", handler: receive });
         await instance.render();
      }
   };
