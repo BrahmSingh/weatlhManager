@@ -16,7 +16,7 @@
 
 #WACContainer.WACContainer .WACWidget.WACWidget--defaultElement
 {
-    width: 35em !important;
+    width: 40em !important;
 }
 
 #WACContainer.WACContainer .HSArticles {
@@ -45,3 +45,16 @@
     width: 30px;
   }
 
+  #WACContainer.WACContainer .WACWidget .WACHomeScreenModern__inputContainer .WACInputContainer {
+    box-shadow: 0 3px 5px rgba(51, 49, 49, .6);
+    border-top: 0;
+}
+
+#WACContainer.WACContainer .ibm-web-chat--card-home-screen {
+  margin: 0 16px 24px;
+}
+
+#WACContainer.WACContainer .WAC__sent--bubble {
+  background: #0e62fe !important;
+  color: #ffffff !important;
+}
